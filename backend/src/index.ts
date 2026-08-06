@@ -1,20 +1,19 @@
-import Fastify from 'fastify'
+import Fastify from 'fastify';
+import registerRoutes from '@src/routes';
 
-const server = Fastify({
+const app = Fastify({
   logger: true
-})
+});
 
-server.get('/ping', async () => {
-  return { status: 'PONG' }
-})
+void app.register(registerRoutes);
 
 const start = async () => {
   try {
-    await server.listen({ port: 3000, host: '0.0.0.0' })
+    await app.listen({ port: 3000, host: '0.0.0.0' });
   } catch (err) {
-    server.log.error(err)
-    process.exit(1)
+    app.log.error(err);
+    process.exit(1);
   }
-}
+};
 
-void start()
+void start();
